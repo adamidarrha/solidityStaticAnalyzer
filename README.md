@@ -23,7 +23,7 @@ yarn analyze contracts -s scope.example.txt -g githubLink.com -o outfile.md
 
 | Repository                                                                        | Report                                                                     |
 | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [Ens](https://code4rena.com/contests/2023-10-ens)                           | [Report](https://gist.github.com/Picodes/e9f1bb87ae832695694175abd8f9797f) |
+| [Ens](https://code4rena.com/contests/2023-10-ens)                           | [Report](https://github.com/adamidarrha/PFS-staticAnalyzer/blob/main/reports/ens.md) |
 
 
 ## Installation
