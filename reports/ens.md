@@ -6,39 +6,45 @@
 
 ### Medium Issues
 
-Total **2 instances** over **1 issue**
+Total **1 instance** over **1 issue**
 |ID|Issue|Instances|
 |-|:-|:-:|
-| [M&#x2011;01](#M&#x2011;01) | Centralization Risk for trusted owners | 2 |
+| [M&#x2011;01](#M&#x2011;01) | Centralization Risk for trusted owners | 1 |
 
 ### Low Issues
 
-Total **4 instances** over **1 issue**
+Total **6 instances** over **3 issues**
 |ID|Issue|Instances|
 |-|:-|:-:|
-| [L&#x2011;01](#L&#x2011;01) | Unsafe ERC20 operation(s) | 4 |
+| [L&#x2011;01](#L&#x2011;01) | Solidity 0.8.20+ might not function on different chains because of PUSH0. | 1 |
+| [L&#x2011;02](#L&#x2011;02) | Use Ownable2Step instead of Ownable | 1 |
+| [L&#x2011;03](#L&#x2011;03) | Unsafe ERC20 operation(s) | 4 |
 
 ### Non Critical Issues
 
-Total **3 instances** over **2 issues**
+Total **13 instances** over **7 issues**
 |ID|Issue|Instances|
 |-|:-|:-:|
-| [NC&#x2011;01](#NC&#x2011;01) | Return values of `approve()` not checked | 1 |
-| [NC&#x2011;02](#NC&#x2011;02) | Event is missing `indexed` fields | 2 |
+| [NC&#x2011;01](#NC&#x2011;01) | Use Custom Errors | 1 |
+| [NC&#x2011;02](#NC&#x2011;02) | Use Custom Errors | 1 |
+| [NC&#x2011;03](#NC&#x2011;03) | replace abi.encodePacked() with bytes.concat() | 2 |
+| [NC&#x2011;04](#NC&#x2011;04) | Don't initialize variables with default value | 1 |
+| [NC&#x2011;05](#NC&#x2011;05) | names of `private`/`internal` functions should start with an underscore | 5 |
+| [NC&#x2011;06](#NC&#x2011;06) | Return values of `approve()` not checked | 1 |
+| [NC&#x2011;07](#NC&#x2011;07) | Event is missing `indexed` fields | 2 |
 
 ### Gas Optimizations
 
-Total **44 instances** over **8 issues**
+Total **34 instances** over **7 issues**
 |ID|Issue|Instances|
 |-|:-|:-:|
 | [GAS&#x2011;01](#GAS&#x2011;01) | State variables should be cached in stack variables rather than re-reading them from storage | 2 |
 | [GAS&#x2011;02](#GAS&#x2011;02) | Use calldata instead of memory for function arguments that do not get mutated | 2 |
 | [GAS&#x2011;03](#GAS&#x2011;03) | For Operations that will not overflow, you could use unchecked | 23 |
-| [GAS&#x2011;04](#GAS&#x2011;04) | Don't initialize variables with default value | 1 |
+| [GAS&#x2011;04](#GAS&#x2011;04) | `Constructors` can be marked `payable` to save deployment gas | 1 |
 | [GAS&#x2011;05](#GAS&#x2011;05) | Functions guaranteed to revert when called by normal users can be marked `payable` | 1 |
 | [GAS&#x2011;06](#GAS&#x2011;06) | `++i` costs less gas than `i++`, especially when it's used in `for`-loops (`--i`/`i--` too) | 1 |
-| [GAS&#x2011;07](#GAS&#x2011;07) | names of `private`/`internal` functions should start with an underscore | 10 |
-| [GAS&#x2011;08](#GAS&#x2011;08) | Use != 0 instead of > 0 for unsigned integer comparison | 4 |
+| [GAS&#x2011;07](#GAS&#x2011;07) | Use != 0 instead of > 0 for unsigned integer comparison | 4 |
 
 ## Medium Issues
 
@@ -47,21 +53,44 @@ Total **44 instances** over **8 issues**
 #### Impact:
 Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.
 
-*Instances (2)*:
+*Instances (1)*:
+```solidity
+File: contracts/ERC20MultiDelegate.sol
+
+151:     function setUri(string memory uri) external onlyOwner {
+
+```
+
+
+## Low Issues
+
+### <a name="L&#x2011;01"></a>[L-01] Solidity 0.8.20+ might not function on different chains because of PUSH0.
+
+#### Impact:
+Solidity versions starting from 0.8.20 utilize the Shanghai EVM, introducing the PUSH0 opcode. Not all EVM chains or Layer2 solutions may have implemented this opcode, which could lead to deployment issues on these platforms. To mitigate this, it's advisable to contemplate using an earlier Solidity version.
+
+*Instances (1)*:
+```solidity
+File: contracts/ERC20MultiDelegate.sol
+
+2: pragma solidity ^0.8.2;
+
+```
+
+### <a name="L&#x2011;02"></a>[L-02] Use Ownable2Step instead of Ownable
+
+#### Impact:
+[`Ownable2Step`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/3d7a93876a2e5e1d7fe29b5a0e96e222afdc4cfa/contracts/access/Ownable2Step.sol#L31-L56) and [`Ownable2StepUpgradeable`](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/25aabd286e002a1526c345c8db259d57bdf0ad28/contracts/access/Ownable2StepUpgradeable.sol#L47-L63) prevent the contract ownership from mistakenly being transferred to an address that cannot handle it (e.g. due to a typo in the address), by requiring that the recipient of the owner permissions actively accept via a contract call of its own.
+
+*Instances (1)*:
 ```solidity
 File: contracts/ERC20MultiDelegate.sol
 
 25: contract ERC20MultiDelegate is ERC1155, Ownable {
 
-151:     function setUri(string memory uri) external onlyOwner {
-
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
-
-## Low Issues
-
-### <a name="L&#x2011;01"></a>[L-01] Unsafe ERC20 operation(s)
+### <a name="L&#x2011;03"></a>[L-03] Unsafe ERC20 operation(s)
 
 *Instances (4)*:
 ```solidity
@@ -76,12 +105,77 @@ File: contracts/ERC20MultiDelegate.sol
 170:         token.transferFrom(proxyAddressFrom, proxyAddressTo, amount);
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
 
 ## Non Critical Issues
 
-### <a name="NC&#x2011;01"></a>[NC-01] Return values of `approve()` not checked
+### <a name="NC&#x2011;01"></a>[NC-01] Use Custom Errors
+[Source](https://blog.soliditylang.org/2021/04/21/custom-errors/)
+Instead of using error strings, to reduce deployment and runtime cost, you should use Custom Errors. This would save both deployment and runtime cost.
+
+*Instances (1)*:
+```solidity
+File: contracts/ERC20MultiDelegate.sol
+
+131:         assert(amount <= balance);
+
+```
+
+### <a name="NC&#x2011;02"></a>[NC-02] Use Custom Errors
+[Source](https://blog.soliditylang.org/2021/04/21/custom-errors/)
+Instead of using error strings, to reduce deployment and runtime cost, you should use Custom Errors. This would save both deployment and runtime cost.
+
+*Instances (1)*:
+```solidity
+File: contracts/ERC20MultiDelegate.sol
+
+74:         require(
+
+```
+
+### <a name="NC&#x2011;03"></a>[NC-03] replace abi.encodePacked() with bytes.concat()
+In Solidity version 0.8.4, the introduction of `bytes.concat()` offers a viable alternative to `abi.encodePacked()` for handling bytes and strings. This function can enhance the clarity of your code, reducing potential confusion for reviewers.
+
+*Instances (2)*:
+```solidity
+File: contracts/ERC20MultiDelegate.sol
+
+202:         bytes memory bytecode = abi.encodePacked(
+
+207:             abi.encodePacked(
+
+```
+
+### <a name="NC&#x2011;04"></a>[NC-04] Don't initialize variables with default value
+
+*Instances (1)*:
+```solidity
+File: contracts/ERC20MultiDelegate.sol
+
+86:             uint transferIndex = 0;
+
+```
+
+### <a name="NC&#x2011;05"></a>[NC-05] names of `private`/`internal` functions should start with an underscore
+as per the recommendation of [Solidity Style Guide](https://docs.soliditylang.org/en/v0.8.20/style-guide.html#underscore-prefix-for-non-external-functions-and-variables).
+
+*Instances (5)*:
+```solidity
+File: contracts/ERC20MultiDelegate.sol
+
+155:     function createProxyDelegatorAndTransfer(
+
+163:     function transferBetweenDelegators(
+
+173:     function deployProxyDelegatorIfNeeded(
+
+192:     function getBalanceForDelegate(
+
+198:     function retrieveProxyContractAddress(
+
+```
+
+### <a name="NC&#x2011;06"></a>[NC-06] Return values of `approve()` not checked
 Not all IERC20 implementations `revert()` when there's a failure in `approve()`. The function signature has a boolean return value and they indicate errors that way instead. By not checking the return value, operations that should have marked as failed, may potentially go through without actually approving anything
 
 *Instances (1)*:
@@ -91,9 +185,8 @@ File: contracts/ERC20MultiDelegate.sol
 17:         _token.approve(msg.sender, type(uint256).max);
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
-### <a name="NC&#x2011;02"></a>[NC-02] Event is missing `indexed` fields
+### <a name="NC&#x2011;07"></a>[NC-07] Event is missing `indexed` fields
 Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.
 
 *Instances (2)*:
@@ -105,7 +198,6 @@ File: contracts/ERC20MultiDelegate.sol
 33:     event DelegationProcessed(
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
 
 ## Gas Optimizations
@@ -124,7 +216,6 @@ File: contracts/ERC20MultiDelegate.sol
 186:             new ERC20ProxyDelegator{salt: 0}(token, delegate);
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
 ### <a name="GAS&#x2011;02"></a>[GAS-02] Use calldata instead of memory for function arguments that do not get mutated
 Mark data types as `calldata` instead of `memory` where possible. This makes it so that the data is not automatically loaded into memory. If the data passed into the function does not need to be changed (like updating values in an array), it can be passed in as `calldata`. The one exception to this is if the argument must later be passed into another function that takes an argument that specifies `memory` storage.
@@ -138,7 +229,6 @@ File: contracts/ERC20MultiDelegate.sol
 151:     function setUri(string memory uri) external onlyOwner {
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
 ### <a name="GAS&#x2011;03"></a>[GAS-03] For Operations that will not overflow, you could use unchecked
 
@@ -193,18 +283,17 @@ File: contracts/ERC20MultiDelegate.sol
 210:                 uint256(0), // salt
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
-### <a name="GAS&#x2011;04"></a>[GAS-04] Don't initialize variables with default value
+### <a name="GAS&#x2011;04"></a>[GAS-04] `Constructors` can be marked `payable` to save deployment gas
+Payable functions cost less gas to execute, because the compiler does not have to add extra checks to ensure that no payment is provided. A constructor can be safely marked as payable, because only the deployer would be able to pass funds, and the project itself would not pass any funds.
 
 *Instances (1)*:
 ```solidity
 File: contracts/ERC20MultiDelegate.sol
 
-86:             uint transferIndex = 0;
+151:     function setUri(string memory uri) external onlyOwner {
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
 ### <a name="GAS&#x2011;05"></a>[GAS-05] Functions guaranteed to revert when called by normal users can be marked `payable`
 If a function modifier such as `onlyOwner` is used, the function will revert if a normal user tries to pay the function. Marking the function as `payable` will lower the gas cost for legitimate callers because the compiler will not include checks for whether a payment was provided.
@@ -216,7 +305,6 @@ File: contracts/ERC20MultiDelegate.sol
 151:     function setUri(string memory uri) external onlyOwner {
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
 ### <a name="GAS&#x2011;06"></a>[GAS-06] `++i` costs less gas than `i++`, especially when it's used in `for`-loops (`--i`/`i--` too)
 *Saves 5 gas per loop*
@@ -228,39 +316,8 @@ File: contracts/ERC20MultiDelegate.sol
 88:             transferIndex++
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
-### <a name="GAS&#x2011;07"></a>[GAS-07] names of `private`/`internal` functions should start with an underscore
-as per the recommendation of [Solidity Style Guide](https://docs.soliditylang.org/en/v0.8.20/style-guide.html#underscore-prefix-for-non-external-functions-and-variables).
-
-*Instances (10)*:
-```solidity
-File: contracts/ERC20MultiDelegate.sol
-
-57:     function delegateMulti(
-
-65:     function _delegateMulti(
-
-124:     function _processDelegation(
-
-144:     function _reimburse(address source, uint256 amount) internal {
-
-151:     function setUri(string memory uri) external onlyOwner {
-
-155:     function createProxyDelegatorAndTransfer(
-
-163:     function transferBetweenDelegators(
-
-173:     function deployProxyDelegatorIfNeeded(
-
-192:     function getBalanceForDelegate(
-
-198:     function retrieveProxyContractAddress(
-
-```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
-
-### <a name="GAS&#x2011;08"></a>[GAS-08] Use != 0 instead of > 0 for unsigned integer comparison
+### <a name="GAS&#x2011;07"></a>[GAS-07] Use != 0 instead of > 0 for unsigned integer comparison
 
 *Instances (4)*:
 ```solidity
@@ -275,5 +332,4 @@ File: contracts/ERC20MultiDelegate.sol
 113:         if (targetsLength > 0) {
 
 ```
-[Link to code](https://github.com/code-423n4/2023-10-ens/tree/main/contracts/ERC20MultiDelegate.sol)
 
