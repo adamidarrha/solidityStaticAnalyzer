@@ -1,7 +1,7 @@
 import { InputType, Instance } from './types';
 import fs from 'fs';
 import { findAll } from 'solidity-ast/utils';
-import { ContractDefinition, SourceUnit } from 'solidity-ast';
+import { ContractDefinition, VariableDeclaration } from 'solidity-ast';
 import { exec } from 'child_process';
 
 /**
@@ -90,7 +90,7 @@ export const topLevelFiles = (contractId: number, files: InputType): InputType =
 /**
  * @notice Extracts storage variables from a contract
  */
-export const getStorageVariable = (contract: ContractDefinition): string[] => {
+export const getStorageVariableName = (contract: ContractDefinition): string[] => {
   /** Build list of storage variables */
   let storageVariables = [...findAll('VariableDeclaration', contract)]
     .filter(e => (e.storageLocation === 'default' || e.storageLocation === 'storage') && e.mutability === 'mutable')
@@ -102,13 +102,35 @@ export const getStorageVariable = (contract: ContractDefinition): string[] => {
   }
   /** Remove event variables */
   for (const func of findAll('EventDefinition', contract)) {
-    const funcVariables = [...findAll('VariableDeclaration', func)].map(e => e.name);
-    storageVariables = storageVariables.filter(e => !funcVariables.includes(e));
+    const eventVariables = [...findAll('VariableDeclaration', func)].map(e => e.name);
+    storageVariables = storageVariables.filter(e => !eventVariables.includes(e));
   }
   /** Remove error variables */
   for (const func of findAll('ErrorDefinition', contract)) {
-    const funcVariables = [...findAll('VariableDeclaration', func)].map(e => e.name);
+    const errorVariables = [...findAll('VariableDeclaration', func)].map(e => e.name);
+    storageVariables = storageVariables.filter(e => !errorVariables.includes(e));
+  }
+  return storageVariables;
+};
+
+export const getStorageVariable = (contract: ContractDefinition): VariableDeclaration[] => {
+  /** Build list of storage variables */
+  let storageVariables = [...findAll('VariableDeclaration', contract)]
+    .filter(e => (e.storageLocation === 'default' || e.storageLocation === 'storage') && e.mutability === 'mutable');
+  /** Remove function variables */
+  for (const func of findAll('FunctionDefinition', contract)) {
+    const funcVariables = [...findAll('VariableDeclaration', func)];
     storageVariables = storageVariables.filter(e => !funcVariables.includes(e));
+  }
+  /** Remove event variables */
+  for (const func of findAll('EventDefinition', contract)) {
+    const eventVariables = [...findAll('VariableDeclaration', func)];
+    storageVariables = storageVariables.filter(e => !eventVariables.includes(e));
+  }
+  /** Remove error variables */
+  for (const func of findAll('ErrorDefinition', contract)) {
+    const errorVariables = [...findAll('VariableDeclaration', func)];
+    storageVariables = storageVariables.filter(e => !errorVariables.includes(e));
   }
   return storageVariables;
 };

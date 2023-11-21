@@ -1,6 +1,6 @@
 import { findAll } from 'solidity-ast/utils';
-import { ASTIssue, InputType, Instance, IssueTypes, RegexIssue } from '../../types';
-import { getStorageVariable, instanceFromSRC } from '../../utils';
+import { ASTIssue, InputType, Instance, IssueTypes } from '../../types';
+import { getStorageVariableName, instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
   regexOrAST: 'AST',
@@ -13,7 +13,7 @@ const issue: ASTIssue = {
       if (!!file.ast) {
         for (const contract of findAll('ContractDefinition', file.ast)) {
           /** Build list of storage variables */
-          let storageVariables = getStorageVariable(contract);
+          let storageVariables = getStorageVariableName(contract);
 
           for (const func of findAll('FunctionDefinition', contract)) {
             for (const assign of findAll('Assignment', func)) {
@@ -28,7 +28,7 @@ const issue: ASTIssue = {
                 for (const test of findAll('BinaryOperation', func)) {
                   if (
                     (test.operator === '!=' || test.operator === '==') &&
-                    ((test.rightExpression.nodeType === 'Identifier' && test.rightExpression.name === assignName) ||
+                    ((test.rightExpression.nodeType === 'Identifier' && test.rightExpression.name === assignName) || //check that the address is checked against a value, should be more regorous and check that is checked against 0
                       (test.leftExpression.nodeType === 'Identifier' && test.leftExpression.name === assignName))
                   ) {
                     check = true;
