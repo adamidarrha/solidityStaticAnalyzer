@@ -1,13 +1,23 @@
 pragma solidity ^0.8.0;
 
+import "./Ownable.sol";
 import "./test2.sol";
 import {token} from "./test2.sol";
 
+interface testInterface{
+    function test_interface() external;
+}
+
+contract ERC721{}
+
+contract refactor{
+    function testing() view public{}
+}
 
 /// @title test title 
 /// @author test author
 /// @notice test notice
-contract Test {
+contract Test is token, testInterface, ERC721{
 
     error noParameter();
     error parameter(address);
@@ -19,6 +29,7 @@ contract Test {
     uint testMagicNumber = 1e4;
     uint testLiteral = 10000;
     uint underscor = 10_000;
+    uint large = 10000000;
 
     uint private notUnderscore;
     address internal noUnderscore;
@@ -34,11 +45,34 @@ contract Test {
         Token = _Token;
     }
 
+    modifier testmod(){
+        require(msg.sender != address(0));
+        _;
+    }
+
     function test_inernal() internal {}
 
     function testCallingInternal() public {
         test_inernal();
     }
+
+    function test_division(uint a, uint b) public{
+        a/b;
+    }
+
+    function testModifier() public testmod{
+
+    }
+
+    function test_interface() public{}
+
+    function test_deadline(uint a) view public{
+        require(block.timestamp > a);
+    }
+
+    function testEthTransfer() payable public{
+        msg.sender.call{value: msg.value}("");
+    } 
 
     function testSafeTransfer() public {
         Token.transfer(msg.sender, 10);
@@ -134,6 +168,10 @@ contract Test {
             revert("long revert string");
         }
     }
+
+    fallback() external payable{}
+
+    receive() external payable{}
 
     // TODO : Make these vars
     function mathTest() external {

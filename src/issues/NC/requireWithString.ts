@@ -6,6 +6,7 @@ const issue: ASTIssue = {
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: ' `require()` / `revert()` statements should have descriptive reason strings',
+  description: "If a transaction reverts, it can be confusing to debug if there aren't any messages. Add a descriptive message to all require/revert statements.",
   detector: (files: InputType): Instance[] => {
     let instances: Instance[] = [];
 

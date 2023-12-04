@@ -5,19 +5,22 @@ import { instanceFromSRC } from '../../utils';
 const issue: ASTIssue = {
   regexOrAST: 'AST',
   type: IssueTypes.NC,
-  title: 'Contracts should have NatSpec @dev tags',
+  title: 'No access control on receive/payable fallback',
+  description: "Users may send ETH by mistake to these contracts. As there is no access control on these functions, the funds will be permanently lost.",
   detector: (files: InputType): Instance[] => {
     let instances: Instance[] = [];
 
     for (const file of files) {
       if (!!file.ast) {
         for (const contract of findAll('ContractDefinition', file.ast)) {
-          const regex = /@dev/g;
-          if(!!contract.documentation){
-          if (!regex.test(contract.documentation.text)) instances.push(instanceFromSRC(file, contract.src));
-          }
+          for (const func of findAll('FunctionDefinition', contract)) {
+          
+            if((func.kind == "fallback" && func.stateMutability == "payable")|| func.kind == "receive"){
+            if(func.modifiers.length == 0) instances.push(instanceFromSRC(file, func.src));
         }
-      }
+        }
+    }
+}
     }
     return instances;
   },
