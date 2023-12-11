@@ -21,7 +21,7 @@ jobs:
 
     #run python script that checks if all issues have test contracts 
     - name: test contracts existence check
-      run: python3 checkFilenames.py
+      run: python3 util/checkFilenames.py
     
     - name: set up node
       uses: actions/setup-node@v3
