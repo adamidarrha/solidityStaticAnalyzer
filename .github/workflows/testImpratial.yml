@@ -1,5 +1,5 @@
-#this workflow checks the existence of tests to start then runs them
-name: check exitence and run tests 
+#this is a copy of the test workflow that doesn't check if all tests exist before running
+name: run tests that exist
 
 on:
   push:
@@ -15,14 +15,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: set up python 
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10' 
+    # - name: set up python 
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: '3.10' 
 
-    #run python script that checks if all issues have test contracts 
-    - name: test contracts existence check
-      run: python3 util/checkFilenames.py
+    # #run python script that checks if all issues have test contracts 
+    # - name: test contracts existence check
+    #   run: python3 util/checkFilenames.py
     
     - name: set up node
       uses: actions/setup-node@v3

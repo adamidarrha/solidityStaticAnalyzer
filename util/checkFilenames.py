@@ -30,7 +30,7 @@ def check_filenames():
 
     #if didn't find the same contracts as issues will fail signaling to gthub action a fail
     if set(contracts_files) != set(src_issues_files):
-        print("Error: Filenames in contracts do not match filenames in src/issues.")
+        print("Error: Not all issues have test contracts, create test contracts for all issues.")
         exit(1)
 
 if __name__ == "__main__":
