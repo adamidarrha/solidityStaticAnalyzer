@@ -5,16 +5,20 @@ import compileAndBuildAST from "../src/compile";
 import { recursiveExploration } from "../src/utils";
 import { SourceUnit } from "solidity-ast";
 import { InputType, Issue, IssueTypes } from "../src/types";
-import { NonCriticalIssues } from "../src/issues";
+import { HighIssues } from "../src/issues";
 
-describe('NonCriticalTests', function () {
+const issueType = "H";
+
+describe('test high issues', function () {
 
     describe('run tests', async function () {
-        const basePath: string = "contracts/";
+        const basePath: string = `contracts/${issueType}/`;
+        
         let asts: SourceUnit[] = [];
 
         //get all contract names in the contracts folder
         let contractFileNames: string[] = recursiveExploration(basePath);
+        console.log("contract file names: ", contractFileNames);
 
         try{
             asts = await compileAndBuildAST(basePath, contractFileNames);
@@ -40,17 +44,17 @@ describe('NonCriticalTests', function () {
             console.log("issueName: ", issueName);
 
             //placeholder issue for compiler , should always have issue unless name is messed up
-            let issue: Issue = {name: "", regexOrAST: 'Regex', type: IssueTypes.NC, title: '', regex: / /g};
+            let issue: Issue = {name: "", regexOrAST: 'Regex', type: IssueTypes.H, title: '', regex: / /g};
 
             //this is only if we don't have corresponding contracts for all issues
-            for(const NonCriticalIssue of NonCriticalIssues){
-                if(NonCriticalIssue.name === issueName){
-                    issue = NonCriticalIssue;
+            for(const highIssue of HighIssues){
+                if(highIssue.name === issueName){
+                    issue = highIssue;
                     break;
                 }
             }
 
-            it(issueName, function() {
+            it(`${issueName}::${issueType}`, function() {
                 //the issue
                 let contractInput: InputType = [];
                 contractInput.push(contract);
@@ -61,3 +65,4 @@ describe('NonCriticalTests', function () {
         }
     })
 })
+

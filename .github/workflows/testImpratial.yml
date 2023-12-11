@@ -30,7 +30,7 @@ jobs:
         node-version: 20.x
         cache: npm
 
-    #install dependencies in the lock.json file
+    #install dependencies in the package-lock.json file
     - name: Install dependencies and build
       run: npm ci
 

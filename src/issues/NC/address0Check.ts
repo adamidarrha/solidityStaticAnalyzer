@@ -4,8 +4,6 @@ import { getStorageVariableName, instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
 	name: "address0Check",
-	
-  name: "address0Check",
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Missing checks for `address(0)` when assigning values to address state variables',
