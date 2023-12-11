@@ -24,6 +24,7 @@ const compile = async (version: string, toCompile: ToCompile, basePath: string) 
 
   let output;
   if (trueVersion !== version) {
+    console.error("error: ", output);
     output = {
       errors: [{ formattedMessage: `Package solc-${version} is actually solc@${trueVersion}` }],
     };

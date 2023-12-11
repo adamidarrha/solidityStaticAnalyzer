@@ -1,6 +1,8 @@
 import { findAll } from 'solidity-ast/utils';
 import { ASTIssue, InputType, Instance, IssueTypes } from '../../types';
-import { getStorageVariable, instanceFromSRC } from '../../utils';
+import { instanceFromSRC } from '../../utils';
+
+//chacks if a constant is not private
 
 const issue: ASTIssue = {
 	name: "privateForConstants",
@@ -15,16 +17,14 @@ const issue: ASTIssue = {
     for (const file of files) {
       if (!!file.ast) {
         for (const contract of findAll('ContractDefinition', file.ast)) {
-          /** Build list of storage variables */
-          let storageVariables = getStorageVariable(contract);
-
-          for (const variable of storageVariables){
-            if ((variable.mutability == "immutable" || variable.constant) && variable.visibility == "public") instances.push(instanceFromSRC(file, variable.src));
-            
-          }
-              }
+          for(const variable of findAll('VariableDeclaration', contract)){
+            if(variable.mutability == "constant" && variable.visibility != "internal" && variable.visibility != "private"){
+              instances.push(instanceFromSRC(file, variable.src));
             }
           }
+        }
+      }
+    }
     return instances;
   },
 };
