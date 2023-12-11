@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "initializeDefaultValue",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.NC,
   title: "Don't initialize variables with default value",

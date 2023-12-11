@@ -25,7 +25,7 @@ Total **6 instances** over **3 issues**
 Total **13 instances** over **7 issues**
 |ID|Issue|Instances|
 |-|:-|:-:|
-| [NC&#x2011;01](#NC&#x2011;01) | Use Custom Errors | 1 |
+| [NC&#x2011;01](#NC&#x2011;01) | Replace 'assert()' with 'require()' or 'revert()'. | 1 |
 | [NC&#x2011;02](#NC&#x2011;02) | Use Custom Errors | 1 |
 | [NC&#x2011;03](#NC&#x2011;03) | replace abi.encodePacked() with bytes.concat() | 2 |
 | [NC&#x2011;04](#NC&#x2011;04) | Don't initialize variables with default value | 1 |
@@ -109,9 +109,8 @@ File: contracts/ERC20MultiDelegate.sol
 
 ## Non Critical Issues
 
-### <a name="NC&#x2011;01"></a>[NC-01] Use Custom Errors
-[Source](https://blog.soliditylang.org/2021/04/21/custom-errors/)
-Instead of using error strings, to reduce deployment and runtime cost, you should use Custom Errors. This would save both deployment and runtime cost.
+### <a name="NC&#x2011;01"></a>[NC-01] Replace 'assert()' with 'require()' or 'revert()'.
+In versions of Solidity prior to 0.8.0, when encountering an assert all the remaining gas will be consumed.Even after solidity 0.8.0, the assert function is still not recommended, as described in the [documentation](https://docs.soliditylang.org/en/v0.8.20/control-structures.html#panic-via-assert-and-error-via-require):> Assert should only be used to test for internal errors, and to check invariants. Properly functioning code should never create a Panic, not even on invalid external input. If this happens, then there is a bug in your contract which you should fix.
 
 *Instances (1)*:
 ```solidity

@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "avoidEncodePacked",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.L,
   title:

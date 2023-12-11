@@ -1,6 +1,10 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
+//check if cuntions have modifiers with names such as onlyOwner
+
 const issue: RegexIssue = {
+	name: "centralizationRisk",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.M,
   title: 'Centralization Risk for trusted owners',

@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "returnValueOfApprove",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.NC,
   title: 'Return values of `approve()` not checked',

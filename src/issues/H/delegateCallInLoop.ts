@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "delegateCallInLoop",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.H,
   title: 'Using `delegatecall` inside a loop',

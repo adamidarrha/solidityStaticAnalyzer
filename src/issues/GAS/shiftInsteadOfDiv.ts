@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "shiftInsteadOfDiv",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.GAS,
   title: 'Use shift Right/Left instead of division/multiplication if possible',

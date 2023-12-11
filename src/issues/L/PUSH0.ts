@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "PUSH0",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.L,
   title: 'Solidity 0.8.20+ might not function on different chains because of PUSH0.',

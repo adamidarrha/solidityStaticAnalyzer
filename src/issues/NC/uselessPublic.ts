@@ -4,6 +4,7 @@ import { instanceFromSRC } from '../../utils';
 import util from 'util';
 
 const issue: ASTIssue = {
+	name: "uselessPublic",
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Functions not used internally could be marked external',

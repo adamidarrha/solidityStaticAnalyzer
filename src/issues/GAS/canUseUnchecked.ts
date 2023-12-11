@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "canUseUnchecked",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.GAS,
   title: 'For Operations that will not overflow, you could use unchecked',

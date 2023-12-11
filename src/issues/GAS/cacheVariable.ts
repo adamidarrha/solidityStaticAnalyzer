@@ -1,9 +1,11 @@
 import { InputType, IssueTypes, Instance, ASTIssue } from '../../types';
 import { findAll } from 'solidity-ast/utils';
-import { getStorageVariable, instanceFromSRC } from '../../utils';
+import { getStorageVariableName, instanceFromSRC } from '../../utils';
 import { Identifier } from 'solidity-ast';
 
 const issue: ASTIssue = {
+	name: "cacheVariable",
+	
   regexOrAST: 'AST',
   type: IssueTypes.GAS,
   title: 'State variables should be cached in stack variables rather than re-reading them from storage',
@@ -16,7 +18,7 @@ const issue: ASTIssue = {
       if (!!file.ast) {
         for (const contract of findAll('ContractDefinition', file.ast)) {
           /** Build list of storage variables */
-          let storageVariables = getStorageVariable(contract);
+          let storageVariables = getStorageVariableName(contract);
 
           for (const func of findAll('FunctionDefinition', contract)) {
             /** Check all storage reads */

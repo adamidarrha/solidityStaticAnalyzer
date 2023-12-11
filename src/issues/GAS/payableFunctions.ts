@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "payableFunctions",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.GAS,
   title: 'Functions guaranteed to revert when called by normal users can be marked `payable`',

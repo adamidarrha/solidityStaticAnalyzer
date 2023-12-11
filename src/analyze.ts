@@ -1,4 +1,4 @@
-import { InputType, Instance, Issue, IssueTypes } from './types';
+import { InputType, Instance, Issue, IssueTypes, OneInputType } from './types';
 import { lineFromIndex } from './utils';
 
 const issueTypesTitles = {
@@ -169,6 +169,55 @@ const analyze = (files: InputType, issues: Issue[], githubLink?: string): string
   return result;
 };
 
+export function test(file: InputType, issue: Issue, numberInstances?: number): boolean {
+  if (issue.regexOrAST === 'Regex') {
+
+    //because InputType is an array
+    const matches: any = [...file[0].content.matchAll(issue.regex)];
+    if(!!issue.regexPreCondition) {
+      const preConditionMatches: any = [...file[0].content.matchAll(issue.regexPreCondition)];
+      if (preConditionMatches.length == 0){
+
+        //if precondition is not found;
+         return false;
+        }
+    }
+    
+    //if given number of numberInstances to look for see if the number matches the number of issue found
+    if(numberInstances){
+      if(matches.length == numberInstances){
+        return true;
+      }
+    }
+    else{
+      if(matches.length > 0){
+        return true;
+      }
+    }
+    
+    //either there are no matches or not the number specified
+    return false;
+
+    }
+  //the issue is detected with AST
+  else {
+    let instances: Instance[] = [];
+
+    instances = issue.detector(file);
+    if(numberInstances){
+      if(instances.length == numberInstances){
+        return true;
+      }
+    }
+    else{
+      if (instances.length > 0) {
+        return true;
+        }
+    }
+    return false;
+  }
+}
+
 /***
  * @notice returns number depending on issue type given in parameter
  * @param issue issue parameter 
@@ -192,3 +241,4 @@ function issueType(issue: Issue): number {
   
 
 export default analyze;
+

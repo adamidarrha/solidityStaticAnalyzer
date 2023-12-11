@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "longRevertString",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.GAS,
   title: 'long revert/require string cost extra gas',
