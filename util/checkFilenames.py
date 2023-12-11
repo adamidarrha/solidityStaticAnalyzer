@@ -24,6 +24,9 @@ def check_filenames():
     contracts_files = get_filenames(CONTRACT_FOLDER)
     src_issues_files = get_filenames(SRC_ISSUES_FOLDER)
 
+    #remove the index file which is not an issue
+    src_issues_files.remove("index")
+
     #debug the folders with this
     #print("contract files: ", contracts_files)
     #print("src issues files: ", src_issues_files)
