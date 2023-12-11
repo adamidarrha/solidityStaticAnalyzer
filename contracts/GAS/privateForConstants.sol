@@ -2,6 +2,6 @@ pragma solidity ^0.8.0;
 
 contract Test{
 
-    uint NONCONSTANT;
+    uint constant NONPRIVATECONSTANT = 1;
 
 }
