@@ -7,6 +7,8 @@ import { instanceFromSRC } from '../../utils';
 const regex = /Ownable/gi;
 
 const issue: ASTIssue = {
+	name: "importOwnable",
+	
   regexOrAST: 'AST',
   type: IssueTypes.L,
   title: 'Use of ownership with a single step rather than double',

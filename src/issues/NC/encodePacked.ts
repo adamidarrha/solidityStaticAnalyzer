@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "encodePacked",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.NC,
   title: 'replace abi.encodePacked() with bytes.concat()',

@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes } from '../../types';
 import { getStorageVariable, instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "privateForConstants",
+	
   regexOrAST: 'AST',
   type: IssueTypes.GAS,
   title: 'Using private for constants saves gas',

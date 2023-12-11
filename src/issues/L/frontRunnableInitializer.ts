@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes } from '../../types';
 import { getStorageVariableName, instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "frontRunnableInitializer",
+	
   regexOrAST: 'AST',
   type: IssueTypes.L,
   title: 'Initializers could be front-run',

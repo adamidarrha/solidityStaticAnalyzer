@@ -6,6 +6,8 @@ import { MemberAccess } from 'solidity-ast';
 //we check if there is a binary operation of< or > with block.timestamp on either side saying it should be eaqual or bigger and not strict
 
 const issue: ASTIssue = {
+	name: "deadlineAllowed",
+	
   regexOrAST: 'AST',
   type: IssueTypes.L,
   title: 'Execution at deadlines should be allowed',

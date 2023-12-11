@@ -3,6 +3,8 @@ import { findAll } from 'solidity-ast/utils';
 import { instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "addressBalance",
+	
   regexOrAST: 'AST',
   type: IssueTypes.GAS,
   title: 'Use `selfbalance()` instead of `address(this).balance`',

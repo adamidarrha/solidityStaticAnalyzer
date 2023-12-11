@@ -7,6 +7,8 @@ import { instanceFromSRC } from '../../utils';
 const regex = /Ownable/g;
 
 const issue: ASTIssue = {
+	name: "notUsingOwner",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Ownable is not used anywhere',

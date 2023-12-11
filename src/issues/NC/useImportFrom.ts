@@ -5,6 +5,7 @@ import { instanceFromSRC } from '../../utils';
 //check if using import instead of import from, using the symbolAliases lenght
 
 const issue: ASTIssue = {
+	name: "useImportFrom",
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Lack of specific import identifier',

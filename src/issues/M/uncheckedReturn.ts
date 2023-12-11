@@ -5,6 +5,8 @@ import { instanceFromSRC } from '../../utils';
 //check if return value of low level call is not checked
 
 const issue: ASTIssue = {
+	name: "uncheckedReturn",
+	
   regexOrAST: 'AST',
   type: IssueTypes.M,
   title: 'Unchecked return value of low-level call()/delegatecall()',

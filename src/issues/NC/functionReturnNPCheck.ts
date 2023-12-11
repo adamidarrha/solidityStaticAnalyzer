@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes, RegexIssue } from '../../typ
 import { instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "functionReturnNPCheck",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Functions missing NatSpec @return tag',

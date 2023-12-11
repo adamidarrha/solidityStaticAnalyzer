@@ -5,6 +5,8 @@ import { instanceFromSRC } from '../../utils';
 const regex = /ERC721(?!A$)[A-Za-z0-9]*/gi;
 
 const issue: ASTIssue = {
+	name: "useERC721A",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Consider using ERC721A instead of ERC721',

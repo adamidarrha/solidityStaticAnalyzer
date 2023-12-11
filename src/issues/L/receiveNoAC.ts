@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes} from '../../types';
 import { instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "receiveNoAC",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'No access control on receive/payable fallback',

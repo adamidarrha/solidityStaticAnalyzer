@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes, RegexIssue } from '../../typ
 import { instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "calldataViewFunctions",
+	
   regexOrAST: 'AST',
   type: IssueTypes.GAS,
   title: 'Use calldata instead of memory for function arguments that do not get mutated',

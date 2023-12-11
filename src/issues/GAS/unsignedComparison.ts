@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "unsignedComparison",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.GAS,
   title: 'Use != 0 instead of > 0 for unsigned integer comparison',

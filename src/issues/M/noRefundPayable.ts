@@ -5,6 +5,8 @@ import { instanceFromSRC } from '../../utils';
 //check if there is a check with msg.value >= to something and check if there is an external call to msg.sender with value
 
 const issue: ASTIssue = {
+	name: "noRefundPayable",
+	
   regexOrAST: 'AST',
   type: IssueTypes.M,
   title: 'Unchecked return value of low-level call()/delegatecall()',

@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes } from '../../types';
 import { instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "errorNPCheck",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Error declarations should have NatSpec descriptions',

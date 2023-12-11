@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes } from '../../types';
 import { getStorageVariableName, instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "useCallInsteadOfTransfer",
+	
   regexOrAST: 'AST',
   type: IssueTypes.L,
   title: 'address.transfer() and address.send() should be replace with address.call()',

@@ -2,7 +2,7 @@ import fs from 'fs';
 import analyze from './analyze';
 import compileAndBuildAST from './compile';
 import issues from './issues';
-import { InputType, IssueTypes } from './types';
+import { InputType } from './types';
 import { recursiveExploration } from './utils';
 
 /*   .---. ,--.  ,--  / ,---.   ,--.   ,--.'  ,-. .----. ,------.,------, 

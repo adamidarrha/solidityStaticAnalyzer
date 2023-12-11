@@ -4,6 +4,8 @@ import { instanceFromSRC } from '../../utils';
 import { Expression, SourceUnit } from 'solidity-ast';
 
 const issue: ASTIssue = {
+	name: "addressZero",
+	
   regexOrAST: 'AST',
   type: IssueTypes.GAS,
   title: 'Use assembly to check for `address(0)`',

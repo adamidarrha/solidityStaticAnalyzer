@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes} from '../../types';
 import { instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "contractDevNPCheck",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Contracts should have NatSpec @dev tags',

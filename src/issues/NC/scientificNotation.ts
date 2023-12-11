@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "scientificNotation",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.NC,
   title: 'Large multiples of ten should use scientific notation',

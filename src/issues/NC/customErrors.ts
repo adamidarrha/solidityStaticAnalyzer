@@ -1,6 +1,7 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "customErrors",
   regexOrAST: 'Regex',
   type: IssueTypes.NC,
   title: 'Use Custom Errors',

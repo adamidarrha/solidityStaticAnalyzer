@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes, RegexIssue } from '../../typ
 import { instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "unamedParameter",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Add inline comments for unnamed parameters',

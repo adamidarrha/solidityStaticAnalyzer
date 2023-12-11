@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "privateOrInternalFunctions",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.NC,
   title: "names of `private`/`internal` functions should start with an underscore",

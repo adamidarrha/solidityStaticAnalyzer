@@ -5,6 +5,8 @@ import { instanceFromSRC } from '../../utils';
 const regex = /@author/g;
 
 const issue: ASTIssue = {
+	name: "contractAuthorNPCheck",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'contracts should have @author tag',

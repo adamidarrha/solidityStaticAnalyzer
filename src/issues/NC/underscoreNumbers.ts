@@ -1,6 +1,8 @@
 import { IssueTypes, RegexIssue } from '../../types';
 
 const issue: RegexIssue = {
+	name: "underscoreNumbers",
+	
   regexOrAST: 'Regex',
   type: IssueTypes.NC,
   title: 'Missing/malformed underscores for large numeric literals',

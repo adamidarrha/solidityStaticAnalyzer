@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes, RegexIssue } from '../../typ
 import { getStorageVariable, instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "stVarNPCheck",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'State variables should have NatSpec descriptions',

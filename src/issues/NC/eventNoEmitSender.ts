@@ -6,6 +6,8 @@ import { Identifier, MemberAccess } from 'solidity-ast';
 //checks if event doesn't emit msg.sender 
 
 const issue: ASTIssue = {
+	name: "eventNoEmitSender",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Event is missing msg.sender parameter',

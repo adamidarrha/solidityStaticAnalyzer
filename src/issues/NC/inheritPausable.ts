@@ -7,6 +7,8 @@ import { instanceFromSRC } from '../../utils';
 const regex = /pausable/g;
 
 const issue: ASTIssue = {
+	name: "inheritPausable",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Consider adding emergency-stop functionality',

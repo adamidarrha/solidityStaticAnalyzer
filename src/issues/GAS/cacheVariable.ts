@@ -4,6 +4,8 @@ import { getStorageVariableName, instanceFromSRC } from '../../utils';
 import { Identifier } from 'solidity-ast';
 
 const issue: ASTIssue = {
+	name: "cacheVariable",
+	
   regexOrAST: 'AST',
   type: IssueTypes.GAS,
   title: 'State variables should be cached in stack variables rather than re-reading them from storage',

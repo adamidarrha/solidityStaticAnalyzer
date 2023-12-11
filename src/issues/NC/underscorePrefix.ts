@@ -3,6 +3,8 @@ import { ASTIssue, InputType, Instance, IssueTypes, RegexIssue } from '../../typ
 import { getStorageVariable, instanceFromSRC } from '../../utils';
 
 const issue: ASTIssue = {
+	name: "underscorePrefix",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Names of private/internal state variables should be prefixed with an underscore',

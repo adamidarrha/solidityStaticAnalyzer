@@ -5,6 +5,8 @@ import { instanceFromSRC } from '../../utils';
 //checks a contract if it has only view/pure functions, should be libraries
 
 const issue: ASTIssue = {
+	name: "refactorToLibrary",
+	
   regexOrAST: 'AST',
   type: IssueTypes.NC,
   title: 'Contracts with only utility functions should be libraries',
