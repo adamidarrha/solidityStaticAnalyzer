@@ -1,0 +1,39 @@
+#workflow to see if the pull request satisfies conditions
+#for now the conditions are that all issues have test contracts
+#and the test have passed
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+        master
+
+jobs:
+  validate-pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check previous workflow status
+      id: check_workflow
+      run: |
+        # Extract the previous workflow run ID for the branch associated with the PR
+        PREVIOUS_WORKFLOW_RUN_ID=$(gh api repos/adamidarrha/solidityStaticAnalyzer/actions/workflows/run%20tests/runs?branch=$GITHUB_HEAD_REF | jq -r '.workflow_runs[0].id')
+
+        # Retrieve the conclusion (status) of the previous workflow run using the run ID
+        WORKFLOW_CONCLUSION=$(gh api repos/adamidarrha/solidityStaticAnalyzer/actions/runs/$PREVIOUS_WORKFLOW_RUN_ID | jq -r '.conclusion')
+
+        echo "Previous workflow conclusion: $WORKFLOW_CONCLUSION"
+
+        # Set an output variable with the conclusion for later use
+        echo "::set-output name=workflow_conclusion::$WORKFLOW_CONCLUSION"
+
+    - name: Validate Pull Request
+      run: |
+        # Check the workflow conclusion from the previous step
+        if [[ "${{ steps.check_workflow.outputs.workflow_conclusion }}" != "success" ]]; then
+          echo "Error: The run tests workflow must pass before merging a pull request to main."
+          exit 1
+        else
+          echo "Workflow passed. Proceeding with pull request validation."
+        fi
